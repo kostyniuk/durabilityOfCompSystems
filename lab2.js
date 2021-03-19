@@ -15,10 +15,17 @@ const helpers = {
 
 const fillWorkPercentage = (nodes, chances) => nodes.map((node, i) => ({id: node, chance: chances[i]})) 
 
-const bfs = adjacent => {
-  const adjustedToIndexes = helpers.decrementEveryElement2dArray(adjacent);
+const bfs = (adjacent, offset = 0) => {
+  let adjustedToIndexes = helpers.decrementEveryElement2dArray(adjacent);
+  let isNotPrepared = offset; 
+  while (isNotPrepared) {
+    adjustedToIndexes = helpers.decrementEveryElement2dArray(adjacent);
+    isNotPrepared--;
+  }
+  adjustedToIndexes = helpers.decrementEveryElement2dArray(adjustedToIndexes);
   let queue = [{visited:{0:true},path:[0]}]
   const allPathes = [];
+  console.log({adjustedToIndexes})
   return () => {
       while(queue.length){
         obj = queue.pop() // get last added path
@@ -37,7 +44,8 @@ const bfs = adjacent => {
           }
         }
       }
-      return allPathes;	
+      console.log({allPathes})
+      return allPathes.map(path => path.map(el => el + offset))
    }
 }
 
@@ -75,8 +83,13 @@ const determineSystemCapability = (chances, adjacent) => {
     const nodesNumbers = _.range(1, _.size(adjacent) + 1);
     const nodes = fillWorkPercentage(nodesNumbers, chances)
     
-    const allPathes = bfs(adjacent)();
-    const allStates = determineAllWorkableStates(nodes, allPathes)
+    const allPathes1 = bfs(adjacent)();
+    adjacent.shift()
+    const allPathes2 = bfs(adjacent, 1)();
+    const allPathes = [...allPathes1, ...allPathes2]
+    console.log({allPathes})
+
+    const allStates = determineAllWorkableStates(nodes, [...allPathes])
     const correctWorkPercent = determineSystemWorkPercentage(allStates, nodes)
 
     return correctWorkPercent
@@ -90,6 +103,6 @@ const adjacent11 = [[3,4],[3, 5, 7],[4, 5, 7],[5, 6],[6, 7],[],[]]
 
 const systemCapability = determineSystemCapability(chancesToWorkCorrectly11, adjacent11)
 
-// console.log({systemCapability})
+console.log({systemCapability})
 
 module.exports = {determineSystemCapability};

@@ -13,7 +13,8 @@ const calculatePandQ =(nodes, multiplicity) => {
   return {qs, ps}
 } 
 const hours = 1000;
-const multiplicity = 1
+const multiplicity = 1;
+const multiplicity2 = 1;
 const chancesToWorkCorrectlyExample = [0.5, 0.6, 0.7, 0.8, 0.85, 0.9, 0.92, 0.94]
 const adjacentExample = [[2,3],[4, 5],[4,6, 8],[5, 6, 8],[6, 7],[7, 8],[],[]]
 
@@ -26,7 +27,7 @@ const Treserved = calculateT(Preserved, hours);
 const Gp = calculateG(P, Preserved);
 const Gq = calculateG(Q, Qreserved);
 const Gt = calculateG(T, Treserved);
-const elementsPandQ = calculatePandQ(chancesToWorkCorrectlyExample, multiplicity)
+const elementsPandQ = calculatePandQ(chancesToWorkCorrectlyExample, multiplicity2)
 
 const PresSystem = determineSystemCapability(elementsPandQ.ps, adjacentExample);
 const QresSystem = 1 - PresSystem;
