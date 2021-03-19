@@ -90,4 +90,6 @@ const adjacent11 = [[3,4],[3, 5, 7],[4, 5, 7],[5, 6],[6, 7],[],[]]
 
 const systemCapability = determineSystemCapability(chancesToWorkCorrectly11, adjacent11)
 
-console.log({systemCapability})
+// console.log({systemCapability})
+
+module.exports = {determineSystemCapability};
